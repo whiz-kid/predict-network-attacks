@@ -7,7 +7,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 from xgboost import XGBClassifier
-
+from sklearn.model_selection import train_test_split
 
 train=pd.read_csv("train.csv")
 test=pd.read_csv("test.csv")
@@ -60,18 +60,19 @@ x_test=x_test.drop(['cat_20','cat_21'],axis=1)
 # print(x_test.head())
 clf=RandomForestClassifier(criterion= 'entropy', max_depth=10)
 # clf=XGBClassifier(max_depth=10)
-eq=clf.fit(x_train,y_train)
-pred=eq.predict(x_test)
-pred=np.ravel(pred)
-# print(eq.score(x_train,y_train))
+x,xx,y,yy=train_test_split(x_train,y_train,test_size=0.2,random_state=10)
+eq=clf.fit(x,y)
+# pred=eq.predict(x_test)
+# pred=np.ravel(pred)
+print(eq.score(xx,yy))
 
 # 22,24,30,33,35
 # cat4,cat6,cat12,cat15,cat17
 
-sub = pd.read_csv('sample_submission.csv')
-sub['target'] = pred
-sub['target'] = sub['target'].astype(int)
-sub.to_csv('sub_day2_2.csv', index=False)
+# sub = pd.read_csv('sample_submission.csv')
+# sub['target'] = pred
+# sub['target'] = sub['target'].astype(int)
+# sub.to_csv('sub_day3_2.csv', index=False)
 
 
 
@@ -84,62 +85,3 @@ sub.to_csv('sub_day2_2.csv', index=False)
 # 	score=clf.score(train[column].values.reshape(-1,1),target)
 # 	if(score>=0.70):
 # 		print("{}".format(column))
-
-# cont_1 : 0.605161038823
-# cont_2 : 0.768822316856
-# cont_3 : 0.752325656943
-# cont_4 : 0.584358591198
-# cont_5 : 0.586124613867
-# cont_6 : 0.584364497629
-# cont_7 : 0.585516251543
-# cont_8 : 0.587867010815
-# cont_9 : 0.587181864896
-# cont_10 : 0.648880436131
-# cont_11 : 0.634409681821
-# cont_12 : 0.640971725918
-# cont_13 : 0.702386788497
-# cont_14 : 0.684697029656
-# cont_15 : 0.591794786985
-# cont_16 : 0.59403923051
-# cont_17 : 0.589904729279
-# cont_18 : 0.595521744523
-# cat_1 : 0.62189395595
-# cat_2 : 0.757765479277
-# cat_3 : 0.5840278311
-# cat_4 : 0.583956953936
-# cat_5 : 0.583956953936
-# cat_6 : 0.583962860366
-# cat_7 : 0.584890169928
-# cat_8 : 0.583956953936
-# cat_9 : 0.724222861429
-# cat_10 : 0.584051456821
-# cat_11 : 0.584010111809
-# cat_12 : 0.583980579657
-# cat_13 : 0.584961047092
-# cat_14 : 0.584423561932
-# cat_15 : 0.584016018239
-# cat_16 : 0.584913795649
-# cat_17 : 0.583956953936
-# cat_18 : 0.583962860366
-# cat_19 : 0.584529877678
-# cat_20 : 0.768905006881
-# cat_21 : 0.664674230835
-# cat_22 : 0.697236381248
-# cat_23 : 0.645933127396
-
-# cont_2 : 0.768786878274
-# cont_3 : 0.752337469803
-# cont_13 : 0.702386788497
-# cat_2 : 0.757765479277
-# cat_9 : 0.724222861429
-# cat_20 : 0.768910913311
-
-# cont_2 : 0.768798691135
-# cont_3 : 0.752319750512
-# cont_13 : 0.702386788497
-# cont_14 : 0.684697029656
-# cat_2 : 0.757765479277
-# cat_9 : 0.724222861429
-# cat_20 : 0.768910913311
-# cat_21 : 0.664680137265
-# cat_22 : 0.69723638124
